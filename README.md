@@ -11,19 +11,19 @@ FinalDjangoChat je aplikace na bázi Django, Channels a  Websocketu.
 - SQLite
 
 ## Endpointy
-login/
+`login/`  
 Login na stránku, používa username a password
 
-logout/
+`logout/`  
 Logout ze stránky, vymaže session
 
-registration/
+`registration/`  
 Registrace na stránku pomocí username, password1, password2
 
-rooms/
+`rooms/`  
 Zobrazení všech chatovacíh roomek
 
-room/room_name/
+`room/room_name/`  
 Při kliknuti na room přesměruje do samotné roomky s chatem
 
 
