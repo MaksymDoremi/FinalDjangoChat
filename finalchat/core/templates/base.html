@@ -28,10 +28,17 @@
   <body style="min-width: 450px; " class="d-flex flex-column min-vh-100">
     <!-- NAVBAR -->
     <nav class="navba d-flex justify-content-start" style="background-color: rgb(192, 192, 192); height: 100px;">
-        {% block buttons %}
-        <a href={% url "registration" %}>Registration</a>
-        <a href={% url "login" %}>Login</a>
-        {% endblock buttons %}
+      {% if request.user.is_authenticated %}
+        <a href="/rooms/">Rooms</a>
+        <a href="/logout/">Log out</a>
+        <a href="/registration/">Registration</a>
+        <a href="/login/">Login</a>
+      {% else %}
+        
+        <a href="/registration/">Registration</a>
+        <a href="/login/">Login</a>
+      {% endif %}
+      
       </div>
     </nav>
     {% comment %}Success alert{% endcomment %}
