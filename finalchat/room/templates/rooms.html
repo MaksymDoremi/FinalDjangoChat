@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+  Rooms
+{% endblock %}
+{% block content %}
+  <div class="container mt-2">
+    <div class="row g-2">
+      {% for room in rooms %}
+        <div class="col-xl-4 col-md-6 col-sm-12 text-center" style="display: flex; flex-direction: row; justify-content: center;">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{ room.name }}</h5>
+              {% comment %} <h6 class="card-subtitle mb-2 text-body-secondary">{{ room.slug }}</h6> {% endcomment %}
+              <a href="{% url 'room' room.slug %}">Join</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
