@@ -6,7 +6,7 @@
   <div class="container mt-2">
     <div class="card border-0 rounded-xl shadow">
       <div class="card-body py-3 px-4">
-        <div class="chat-messages">
+        <div class="chat-messages" id="chat-messages">
           {% for m in messages %}
             <div class="card border-0 bg-secondary rounded-xl mb-3">
               <div class="card-body py-2 px-3">
@@ -22,8 +22,7 @@
     <div class="container-lg mt-6 mx-4">
       <div class="row justify-content-center">
         <div class="col-lg-6 p-4 bg-white rounded">
-          <form method="POST" class="d-flex">
-            {% csrf_token %}
+          <form method="POST" action="." class="d-flex">
             <input type="text" name="content" class="form-control flex-1 mr-3 rounded-start" placeholder="Your message..." id="chat-message-input" />
             <button class="btn btn-primary px-5 py-3 rounded-end" id="chat-message-submit">Submit</button>
           </form>
@@ -31,16 +30,19 @@
       </div>
     </div>
   </div>
-{% endblock %}
 
-{% block scripts %}
   {{ room.slug|json_script:'json-roomname' }}
   {{ request.user.username|json_script:'json-username' }}
 
   <script>
     const roomName = JSON.parse(document.getElementById('json-roomname').textContent)
     const userName = JSON.parse(document.getElementById('json-username').textContent)
+    console.log('ws://' + window.location.host + '/ws/' + roomName + '/')
     const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/' + roomName + '/')
+    
+    chatSocket.onopen = function (e) {
+      console.log('onopen')
+    }
     
     chatSocket.onclose = function (e) {
       console.log('onclose')
@@ -50,32 +52,32 @@
       const data = JSON.parse(e.data)
     
       if (data.message) {
-         // Create a new message card
-         const newMessageCard = document.createElement('div');
-         newMessageCard.className = 'card border-0 bg-secondary rounded-xl mb-3';
-
-         // Create card body
-         const cardBody = document.createElement('div');
-         cardBody.className = 'card-body py-2 px-3';
-
-         // Create username element
-         const usernameElement = document.createElement('h6');
-         usernameElement.className = 'card-title font-weight-bold';
-         usernameElement.textContent = data.username;
-
-         // Create message content element
-         const messageContentElement = document.createElement('p');
-         messageContentElement.className = 'card-text';
-         messageContentElement.textContent = data.message;
-
-         // Append elements to card body
-         cardBody.appendChild(usernameElement);
-         cardBody.appendChild(messageContentElement);
-
-         // Append card body to the new message card
-         newMessageCard.appendChild(cardBody);
-
-        document.querySelector('#chat-messages').appendChild(newMessageCard);
+        // Create a new message card
+        const newMessageCard = document.createElement('div')
+        newMessageCard.className = 'card border-0 bg-secondary rounded-xl mb-3'
+    
+        // Create card body
+        const cardBody = document.createElement('div')
+        cardBody.className = 'card-body py-2 px-3'
+    
+        // Create username element
+        const usernameElement = document.createElement('h6')
+        usernameElement.className = 'card-title font-weight-bold'
+        usernameElement.textContent = data.username
+    
+        // Create message content element
+        const messageContentElement = document.createElement('p')
+        messageContentElement.className = 'card-text'
+        messageContentElement.textContent = data.message
+    
+        // Append elements to card body
+        cardBody.appendChild(usernameElement)
+        cardBody.appendChild(messageContentElement)
+    
+        // Append card body to the new message card
+        newMessageCard.appendChild(cardBody)
+    
+        document.querySelector('#chat-messages').appendChild(newMessageCard)
         // MAP MY MESSAGE HERE
         console.log(data.message)
       } else {

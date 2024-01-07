@@ -27,20 +27,21 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/rooms/'
 LOGIN_URL = '/login/'
 
 # Application definition
 
 INSTALLED_APPS = [
+    
     'daphne',
+    'channels', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',  
+    'django.contrib.staticfiles', 
     'core',
     'room'
     
@@ -74,11 +75,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'finalchat.wsgi.application'
+
 ASGI_APPLICATION = 'finalchat.asgi.application'
 
 CHANNEL_LAYERS = {
-    'default':{
+    'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'
     }
 }
