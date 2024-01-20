@@ -47,39 +47,37 @@
     chatSocket.onclose = function (e) {
       console.log('onclose')
     }
+
+    chatSocket.addEventListener("message", (event) => {
+      console.log("Message from server ", event.data);
+    });
     
     chatSocket.onmessage = function (e) {
+      console.log('onmessage');
       const data = JSON.parse(e.data)
     
       if (data.message) {
         // Create a new message card
-        const newMessageCard = document.createElement('div')
-        newMessageCard.className = 'card border-0 bg-secondary rounded-xl mb-3'
-    
+        var newMessageCard = $('<div>').addClass('card border-0 bg-secondary rounded-xl mb-3');
         // Create card body
-        const cardBody = document.createElement('div')
-        cardBody.className = 'card-body py-2 px-3'
-    
+        var cardBody = $('<div>').addClass('card-body py-2 px-3');
+  
         // Create username element
-        const usernameElement = document.createElement('h6')
-        usernameElement.className = 'card-title font-weight-bold'
-        usernameElement.textContent = data.username
-    
+        var usernameElement = $('<h6>').addClass('card-title font-weight-bold').text(data.username);
+  
         // Create message content element
-        const messageContentElement = document.createElement('p')
-        messageContentElement.className = 'card-text'
-        messageContentElement.textContent = data.message
-    
+        var messageContentElement = $('<p>').addClass('card-text').text(data.message);
+  
         // Append elements to card body
-        cardBody.appendChild(usernameElement)
-        cardBody.appendChild(messageContentElement)
-    
+        cardBody.append(usernameElement, messageContentElement);
+  
         // Append card body to the new message card
-        newMessageCard.appendChild(cardBody)
-    
-        document.querySelector('#chat-messages').appendChild(newMessageCard)
+        newMessageCard.append(cardBody);
+  
+        $('#chat-messages').append(newMessageCard);
+  
         // MAP MY MESSAGE HERE
-        console.log(data.message)
+        console.log(data.message);
       } else {
         alert('The message was empty!')
       }

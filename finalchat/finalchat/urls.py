@@ -16,9 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
-    path('rooms/', include('room.urls'))
+    path('rooms/', include('room.urls')),
+    path('api/messages/', views.AllMessages, name="all_messages"),
+    path('api/messages/username/<str:username>', views.AllMessagesByUsername, name="all_messages_by_username"),
+    path('api/messages/room/<str:room_name>', views.AllMessagesByRoom, name="all_messages_by_room"),
+    path('api/messages/contains/<str:word>', views.AllMessagesByWord, name="all_messages_by_word")
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
