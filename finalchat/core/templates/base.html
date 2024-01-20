@@ -29,14 +29,14 @@
     <!-- NAVBAR -->
     <nav class="navba d-flex justify-content-start" style="background-color: rgb(192, 192, 192); height: 100px;">
       {% if request.user.is_authenticated %}
-        <a href="/rooms/">Rooms</a>
-        <a href="/logout/">Log out</a>
-        <a href="/registration/">Registration</a>
-        <a href="/login/">Login</a>
+        <a href="/rooms/" style="margin: 5px;">Rooms</a>
+        <a href="/logout/" style="margin: 5px;">Log out </a>
+        <a href="/registration/" style="margin: 5px;">Registration </a>
+        <a href="/login/" style="margin: 5px;">Login </a>
       {% else %}
         
-        <a href="/registration/">Registration</a>
-        <a href="/login/">Login</a>
+        <a href="/registration/" style="margin: 5px;">Registration </a>
+        <a href="/login/" style="margin: 5px;">Login </a>
       {% endif %}
       
       </div>

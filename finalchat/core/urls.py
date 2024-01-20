@@ -3,7 +3,10 @@ from django.urls import path
 
 from . import views
 
-
+'''
+registration renders templates/registration.html
+logout 
+'''
 urlpatterns = [
     path('', views.frontpage, name='frontpage'),
     path('registration/', views.registration, name='registration'),

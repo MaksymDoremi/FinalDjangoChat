@@ -7,6 +7,9 @@ from .models import Room, Message
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        """
+        Connect to websocket and create group chat_roomname
+        """
         
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
@@ -22,6 +25,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     
     async def disconnect(self, close_code):
+        """
+        Disconnect from websocket
+        """
         
         await self.channel_layer.group_discard(
             self.room_name,
@@ -30,6 +36,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
      # Receive message from WebSocket
     async def receive(self, text_data):
+        """
+        Event listener, listens for new messages
+        Takes message and saves it to SQLite database
+        Afterwards send to the group and html handles display on its own
+        """
         data = json.loads(text_data)
         
         message = data['message']

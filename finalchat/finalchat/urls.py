@@ -26,7 +26,8 @@ urlpatterns = [
     path('api/messages/', views.AllMessages, name="all_messages"),
     path('api/messages/username/<str:username>', views.AllMessagesByUsername, name="all_messages_by_username"),
     path('api/messages/room/<str:room_name>', views.AllMessagesByRoom, name="all_messages_by_room"),
-    path('api/messages/contains/<str:word>', views.AllMessagesByWord, name="all_messages_by_word")
+    path('api/messages/contains/<str:word>', views.AllMessagesByWord, name="all_messages_by_word"),
+    path('api/create_room/', views.create_room, name="api_create_room")
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
